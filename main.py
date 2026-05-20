@@ -1,6 +1,7 @@
 from Dokter import Dokter
 from Pemilik import Pemilik
 from Hewan import Hewan
+from Klinik import Klinik
 
 def main():
     dokter1 = Dokter(
