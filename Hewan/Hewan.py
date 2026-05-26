@@ -1,10 +1,23 @@
+_dataHewan = {}
+
 class Hewan:
+    _counter = 1  # ADD THIS
+
     def __init__(self, **kwargs):
-        self.id_hewan = kwargs.get("id hewan")
+        self.id_hewan = f"H{Hewan._counter:03d}"  # auto-generate
+        Hewan._counter += 1
+
         self.nama = kwargs.get("nama")
         self.usia = kwargs.get("usia")
         self.berat = kwargs.get("berat")
-        self.id_pemilik = kwargs.get("id pemilik")
+        self.id_pemilik = kwargs.get("id_pemilik")  # fix key (see #6)
+
+        _dataHewan[self.id_hewan] = {
+            "nama": self.nama,
+            "usia": self.usia,
+            "berat": self.berat,
+            "id_pemilik": self.id_pemilik
+        }
     
     def __str__(self):
         return (
@@ -18,7 +31,7 @@ class Hewan:
 class Kucing(Hewan):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.jenis_bulu = kwargs.get("jenis bulu")
+        self.jenis_bulu = kwargs.get("jenis_bulu")
     
     def __str__(self):
         return (
@@ -33,7 +46,7 @@ class Kucing(Hewan):
 class Anjing(Hewan):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.jenis_ras = kwargs.get("jenis ras")
+        self.jenis_ras = kwargs.get("jenis_ras")
     
     def __str__(self):
         return (
