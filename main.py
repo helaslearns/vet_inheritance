@@ -1,11 +1,12 @@
 from Klinik import Klinik
-from Dokter import Dokter, DokterUmum, DokterSpesialis
+from Dokter import DokterUmum, DokterSpesialis
 from Hewan import Hewan, Kucing, Anjing
 from Perawat import Perawat, PerawatInap
 from Perawat import _dataPerawat as dataPerawat
 from Dokter import _dataDokter as dataDokter
 from Pemilik import Pemilik
 from Hewan import _dataHewan as dataHewan
+from main.Dokter import Dokter
 
 def database_dokter():
     while True:
