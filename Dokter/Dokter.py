@@ -1,53 +1,59 @@
-_dataDokter = {}
+from __future__ import annotations
 
+from Hewan.Hewan import Hewan, Kucing, Anjing
+
+_dataDokter = []
 
 class Dokter:
-    _counter = 1 
-
-    def __init__(self, **kwargs):
-        self.id_dokter = f"D{Dokter._counter:03d}" 
+    _counter = 0
+    def __init__(self, nama: str, nomor_pegawai:str):
+        self.nama = nama
+        self.nomor_pegawai = nomor_pegawai
+        self.id_dokter = f'DR{Dokter._counter:02d}' # Auto generate ID untuk dokter
+        self.penanganan = [None]
         Dokter._counter += 1
 
-        self.nama = kwargs.get("nama")
-        self.nomor_pegawai = kwargs.get("nomor_pegawai")
+        _dataDokter.append(self.nama)
 
-        print(f"Dokter {self.nama}({self.nomor_pegawai}) telah dibuat! Unique ID: {self.id_dokter}")
-        _dataDokter[self.id_dokter] = {
-            "nama": self.nama,
-            "nomor_pegawai": self.nomor_pegawai
-        }
+    def assignPet(self, hewan: Hewan):
+        if isinstance(hewan, Hewan | Kucing | Anjing):
+            print(f'dr. {self.nama} ({self.id_dokter}) telah ditugaskan untuk merawat {hewan.id_hewan}')
+    
+    def unassignPet(self, hewan: Hewan):
+        if self.penanganan is None:
+            print(f'dr. {self.nama} ({self.id_dokter}) sedang tidak menangani hewan peliharaan!')
+        else:
+            print(f'dr. {self.nama} ({self.id_dokter}) telah menyelesaikan penanganan untuk {hewan.id_hewan}')
 
     def __str__(self):
-        return f"Dokter(ID: {self.id_dokter}, Nama: {self.nama}, No Pegawai: {self.nomor_pegawai})"
+        return(
+            f'Nama Dokter: {self.nama}\n'
+            f'Nomor Pegawai: {self.nomor_pegawai}'
+        )
     
 class DokterUmum(Dokter):
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.tarif = kwargs.get("tarif", 100000)
-        self.hewan_ditangani = []
-        _dataDokter[self.id_dokter]["tarif"] = self.tarif        
-        _dataDokter[self.id_dokter]["tipe"] = "Umum"             
+    def __init__(self, nama: str, nomor_pegawai:str, tarif: int):
+        super().__init__(nama, nomor_pegawai)
+        self.tarif = tarif
+    
+    def assignPet(self, hewan: Hewan):
+        super().assignPet(hewan)
 
-    def assignPet(self, hewan):
-        self.hewan_ditangani.append(hewan)
-        print(f"{hewan.nama} telah ditangani oleh {self.nama}")
-    
+    def unassignPet(self, hewan: Hewan):
+        super().unassignPet(hewan)
+
     def __str__(self):
-        return super().__str__() + f", Tarif: {self.tarif}, Hewan Ditangani: {[hewan.nama for hewan in self.hewan_ditangani]}"
-    
+        return(
+            super().__str__() + f'\nTarif: {self.tarif}'
+        )
+
 class DokterSpesialis(Dokter):
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.spesialisasi = kwargs.get("spesialisasi")
-        self.tarif = kwargs.get("tarif", 200000)
-        self.hewan_ditangani = []
-        _dataDokter[self.id_dokter]["spesialisasi"] = self.spesialisasi  
-        _dataDokter[self.id_dokter]["tarif"] = self.tarif                
-        _dataDokter[self.id_dokter]["tipe"] = "Spesialis"               
-
-    def assignPet(self, hewan):
-        self.hewan_ditangani.append(hewan)
-        print(f"{hewan.nama} telah ditangani oleh {self.nama} (Spesialis {self.spesialisasi})")
+    def __init__(self, nama: str, nomor_pegawai:str, spesialisasi: str, tarif: int):
+        super().__init__(nama, nomor_pegawai)
+        self.spesialisasi = spesialisasi
+        self.tarif = tarif
 
     def __str__(self):
-        return super().__str__() + f", Spesialisasi: {self.spesialisasi}, Tarif: {self.tarif}, Hewan Ditangani: {[hewan.nama for hewan in self.hewan_ditangani]}"
+        return(
+            super().__str__() + f'\nSpesialisasi: {self.spesialisasi}\nTarif: {self.tarif}'
+        )
