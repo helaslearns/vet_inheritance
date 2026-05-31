@@ -2,8 +2,6 @@ from __future__ import annotations
 
 from Hewan.Hewan import Hewan, Kucing, Anjing
 
-_dataDokter = []
-
 class Dokter:
     _counter = 0
     def __init__(self, nama: str, nomor_pegawai:str):
@@ -12,8 +10,6 @@ class Dokter:
         self.id_dokter = f'DR{Dokter._counter:02d}' # Auto generate ID untuk dokter
         self.penanganan = [None]
         Dokter._counter += 1
-
-        _dataDokter.append(self.nama)
 
     def assignPet(self, hewan: Hewan):
         if isinstance(hewan, Hewan | Kucing | Anjing):
